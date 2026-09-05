@@ -20,7 +20,9 @@ workflows:
       - name: Add iOS platform
         script: |
           chmod +x ./node_modules/.bin/*
-          npx cap add ios
+          node ./node_modules/@capacitor/cli/bin/capacitor add ios
+          echo "=== iOS dir check ==="
+          ls -la ios/App/ 2>/dev/null || echo "ios/App not found"
       - name: Generate app icons
         script: npx @capacitor/assets generate --iconBackgroundColor '#0a0a0a' --iconBackgroundColorDark '#0a0a0a' --splashBackgroundColor '#0a0a0a' --splashBackgroundColorDark '#0a0a0a' --ios
       - name: Copy web assets
