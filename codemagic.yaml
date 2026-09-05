@@ -16,7 +16,9 @@ workflows:
       - name: Install npm dependencies
         script: npm install
       - name: Add iOS platform
-        script: npx cap add ios
+        script: |
+          chmod +x ./node_modules/.bin/*
+          npx cap add ios
       - name: Generate app icons
         script: npx @capacitor/assets generate --iconBackgroundColor '#0a0a0a' --iconBackgroundColorDark '#0a0a0a' --splashBackgroundColor '#0a0a0a' --splashBackgroundColorDark '#0a0a0a' --ios
       - name: Copy web assets
