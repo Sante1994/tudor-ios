@@ -9,7 +9,7 @@ workflows:
       vars:
         BUNDLE_ID: "ch.tudorgentlemensbarber.app"
         APP_NAME: "Tudor Gentlemen's Barber"
-      node: v20.9.0
+      node: v22.0.0
       xcode: latest
       cocoapods: default
     scripts:
