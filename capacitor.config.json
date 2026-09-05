@@ -1,0 +1,12 @@
+{
+  "appId": "ch.tudorgentlemensbarber.app",
+  "appName": "Tudor Gentlemen's Barber",
+  "webDir": "www",
+  "server": {
+    "url": "https://tudorgentlemensbarber.ch",
+    "cleartext": false
+  },
+  "ios": {
+    "contentInset": "always"
+  }
+}
