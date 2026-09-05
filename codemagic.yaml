@@ -20,15 +20,20 @@ workflows:
       - name: Add iOS platform
         script: |
           chmod +x ./node_modules/.bin/*
-          node ./node_modules/@capacitor/cli/bin/capacitor add ios
-          echo "=== iOS dir check ==="
-          ls -la ios/App/ 2>/dev/null || echo "ios/App not found"
+          node ./node_modules/@capacitor/cli/bin/capacitor add ios 2>&1 || true
+          echo "=== Searching for Podfile ==="
+          find . -name "Podfile" -not -path "*/node_modules/*" 2>/dev/null
+          echo "=== iOS directory structure ==="
+          find ios/ -maxdepth 3 2>/dev/null || echo "no ios/ dir"
       - name: Generate app icons
         script: npx @capacitor/assets generate --iconBackgroundColor '#0a0a0a' --iconBackgroundColorDark '#0a0a0a' --splashBackgroundColor '#0a0a0a' --splashBackgroundColorDark '#0a0a0a' --ios
       - name: Copy web assets
         script: npx cap copy ios
       - name: Install CocoaPods dependencies
-        script: cd ios/App && pod install
+        script: |
+          PODFILE_DIR=$(find . -name "Podfile" -not -path "*/node_modules/*" -exec dirname {} \; | head -1)
+          echo "Podfile found at: $PODFILE_DIR"
+          cd "$PODFILE_DIR" && pod install
       - name: Set up keychain
         script: keychain initialize
       - name: Fetch signing files
