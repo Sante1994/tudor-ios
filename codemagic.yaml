@@ -6,6 +6,9 @@ workflows:
     integrations:
       app_store_connect: Tudor ASC Key
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: ch.tudorgentlemensbarber.app
       vars:
         BUNDLE_ID: "ch.tudorgentlemensbarber.app"
         APP_NAME: "Tudor Gentlemen's Barber"
@@ -15,12 +18,7 @@ workflows:
     scripts:
       - name: Set up keychain
         script: keychain initialize
-      - name: Create distribution certificate
-        script: |
-          app-store-connect create-certificate \
-            --type IOS_DISTRIBUTION \
-            --save
-      - name: Fetch provisioning profile
+      - name: Fetch signing files
         script: |
           app-store-connect fetch-signing-files \
             ch.tudorgentlemensbarber.app \
