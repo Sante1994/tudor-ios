@@ -20,11 +20,10 @@ workflows:
       - name: Add iOS platform
         script: |
           chmod +x ./node_modules/.bin/*
-          node ./node_modules/@capacitor/cli/bin/capacitor add ios 2>&1 || true
-          echo "=== Searching for Podfile ==="
-          find . -name "Podfile" -not -path "*/node_modules/*" 2>/dev/null
-          echo "=== iOS directory structure ==="
-          find ios/ -maxdepth 3 2>/dev/null || echo "no ios/ dir"
+          set -x
+          node ./node_modules/@capacitor/cli/bin/capacitor add ios
+          echo "=== iOS structure ==="
+          find ios/ -maxdepth 4 2>/dev/null || echo "no ios/ dir created"
       - name: Generate app icons
         script: npx @capacitor/assets generate --iconBackgroundColor '#0a0a0a' --iconBackgroundColorDark '#0a0a0a' --splashBackgroundColor '#0a0a0a' --splashBackgroundColorDark '#0a0a0a' --ios
       - name: Copy web assets
