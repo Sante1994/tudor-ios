@@ -3,7 +3,7 @@
   "appName": "Tudor Gentlemen's Barber",
   "webDir": "www",
   "server": {
-    "url": "https://tudorgentlemensbarber.ch",
+    "url": "https://www.tudorgentlemensbarber.ch/prenota.html",
     "cleartext": false
   },
   "ios": {
