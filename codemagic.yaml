@@ -14,7 +14,9 @@ workflows:
       cocoapods: default
     scripts:
       - name: Install npm dependencies
-        script: npm install
+        script: |
+          npm install
+          npm rebuild sharp
       - name: Add iOS platform
         script: |
           chmod +x ./node_modules/.bin/*
