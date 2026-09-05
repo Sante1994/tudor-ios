@@ -20,25 +20,17 @@ workflows:
       - name: Add iOS platform
         script: |
           chmod +x ./node_modules/.bin/*
-          set -x
           node ./node_modules/@capacitor/cli/bin/capacitor add ios
-          echo "=== iOS structure ==="
-          find ios/ -maxdepth 4 2>/dev/null || echo "no ios/ dir created"
       - name: Generate app icons
         script: npx @capacitor/assets generate --iconBackgroundColor '#0a0a0a' --iconBackgroundColorDark '#0a0a0a' --splashBackgroundColor '#0a0a0a' --splashBackgroundColorDark '#0a0a0a' --ios
       - name: Copy web assets
         script: npx cap copy ios
-      - name: Install CocoaPods dependencies
-        script: |
-          PODFILE_DIR=$(find . -name "Podfile" -not -path "*/node_modules/*" -exec dirname {} \; | head -1)
-          echo "Podfile found at: $PODFILE_DIR"
-          cd "$PODFILE_DIR" && pod install
       - name: Set up keychain
         script: keychain initialize
       - name: Fetch signing files
         script: |
           app-store-connect fetch-signing-files \
-            "$(xcode-project detect-bundle-id)" \
+            "$BUNDLE_ID" \
             --platform IOS \
             --type IOS_APP_STORE \
             --create
@@ -49,7 +41,7 @@ workflows:
       - name: Build iOS IPA
         script: |
           xcode-project build-ipa \
-            --workspace "ios/App/App.xcworkspace" \
+            --project "ios/App/App.xcodeproj" \
             --scheme "App"
     artifacts:
       - build/ios/ipa/*.ipa
